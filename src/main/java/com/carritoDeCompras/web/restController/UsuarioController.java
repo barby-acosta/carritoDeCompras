@@ -19,5 +19,7 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioService usuarioService;
 	
+	//implementar ABM usuarios
+	
 	
 }

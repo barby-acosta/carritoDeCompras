@@ -24,6 +24,8 @@ public class UsuarioService {
 
 	@Autowired
 	private MessageSource messageSource;
+	
+	//implementar ABM usuarios
 
 
 }

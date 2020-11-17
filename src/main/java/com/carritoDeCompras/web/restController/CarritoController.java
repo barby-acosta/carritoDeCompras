@@ -39,13 +39,6 @@ public class CarritoController {
 		carritoService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-//	@PostMapping("/add/{carrito_id}")
-//	public ResponseEntity<CarritoDTO> addProduct(@PathVariable Long carrito_id,  @Valid @RequestBody List<Producto> productos) {
-//		log.debug("REST agregar productos al carrito {}", carrito_id);
-//		CarritoDTO result = carritoService.agregar(carrito_id, productos);
-//		return new ResponseEntity<>(result, HttpStatus.OK);
-//	}
 
 	@GetMapping("/add/{prod_id}/{carrito_id}")
 	public ResponseEntity<CarritoDTO> addProduct(@PathVariable Long prod_id, @PathVariable Long carrito_id) {
@@ -64,7 +57,7 @@ public class CarritoController {
 	// consultar estado de carrito
 	@GetMapping("/carritos/{id}")
 	public ResponseEntity<CarritoDTO> getOne(@PathVariable Long id) {
-		log.debug("REST request to get Carrito : {}", id);
+		log.debug("REST buscar Carrito : {}", id);
 		CarritoDTO result = carritoService.findOne(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
@@ -72,9 +65,16 @@ public class CarritoController {
 	//finalizar compra
 	@GetMapping("/finalizar/{id}")
 	public ResponseEntity<CarritoDTO> finalizar(@PathVariable Long id) {
-		log.debug("REST request to get Carrito : {}", id);
+		log.debug("REST finalizar Carrito : {}", id);
 		CarritoDTO result = carritoService.finalizar(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 }
+
+//@PostMapping("/add/{carrito_id}")
+//public ResponseEntity<CarritoDTO> addProduct(@PathVariable Long carrito_id,  @Valid @RequestBody List<Producto> productos) {
+//	log.debug("REST agregar productos al carrito {}", carrito_id);
+//	CarritoDTO result = carritoService.agregar(carrito_id, productos);
+//	return new ResponseEntity<>(result, HttpStatus.OK);
+//}

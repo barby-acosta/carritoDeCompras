@@ -88,7 +88,7 @@ public class CarritoService {
 	}
 
 	public void delete(Long id) {
-		log.debug("Request to delete Carrito : {}", id);
+		log.debug("Eliminar carrito : {}", id);
 		if (id != null) {
 			Carrito carrito = carritoRepository.findCarritoById(id);
 			if (carrito != null) {
@@ -134,36 +134,6 @@ public class CarritoService {
 			throw new NotFoundRestException(errorMessage, errorDescription, new ArrayList<>());
 		}
 	}
-
-//	public CarritoDTO agregar(Long carrito_id, List<Producto> productos) {
-//		if (carrito_id != null) {
-//			Carrito c = carritoRepository.findCarritoById(carrito_id);
-//			if (c != null) {
-//				for (Producto p : productos) {
-//					c.getProductos().add(p);
-//					c.setTotalsindescuento(c.getTotalsindescuento() + p.getValor());
-//				}
-//				c.setTotalcondescuento(c.getTotalsindescuento());
-//				c.setDescuento(0);
-//				c = getOferta(c);
-//				c = carritoRepository.save(c);
-//				CarritoDTO result = carritoMapper.carritoToCarritoDTO(c);
-//				return result;
-//			} else {
-//				String errorMessage = messageSource.getMessage("error.param_required.message", new Object[] {},
-//						LocaleContextHolder.getLocale());
-//				String errorDescription = messageSource.getMessage("error.param_required.description", new Object[] {},
-//						LocaleContextHolder.getLocale());
-//				throw new NotFoundRestException(errorMessage, errorDescription, new ArrayList<>());
-//			}
-//		} else {
-//			String errorMessage = messageSource.getMessage("error.param_required.message", new Object[] {},
-//					LocaleContextHolder.getLocale());
-//			String errorDescription = messageSource.getMessage("error.param_required.description", new Object[] {},
-//					LocaleContextHolder.getLocale());
-//			throw new NotFoundRestException(errorMessage, errorDescription, new ArrayList<>());
-//		}
-//	}
 
 	private Carrito getOferta(Carrito c) {
 		if (c.getProductos().size() > 5) {
@@ -238,7 +208,7 @@ public class CarritoService {
 
 	@Transactional(readOnly = true)
 	public CarritoDTO findOne(Long id) {
-		log.debug("Request to get Carrito : {}", id);
+		log.debug("Buscar carrito : {}", id);
 		if (id != null) {
 			Carrito carrito = carritoRepository.findCarritoById(id);
 			if (carrito != null) {
@@ -284,3 +254,33 @@ public class CarritoService {
 	}
 
 }
+
+//public CarritoDTO agregar(Long carrito_id, List<Producto> productos) {
+//if (carrito_id != null) {
+//	Carrito c = carritoRepository.findCarritoById(carrito_id);
+//	if (c != null) {
+//		for (Producto p : productos) {
+//			c.getProductos().add(p);
+//			c.setTotalsindescuento(c.getTotalsindescuento() + p.getValor());
+//		}
+//		c.setTotalcondescuento(c.getTotalsindescuento());
+//		c.setDescuento(0);
+//		c = getOferta(c);
+//		c = carritoRepository.save(c);
+//		CarritoDTO result = carritoMapper.carritoToCarritoDTO(c);
+//		return result;
+//	} else {
+//		String errorMessage = messageSource.getMessage("error.param_required.message", new Object[] {},
+//				LocaleContextHolder.getLocale());
+//		String errorDescription = messageSource.getMessage("error.param_required.description", new Object[] {},
+//				LocaleContextHolder.getLocale());
+//		throw new NotFoundRestException(errorMessage, errorDescription, new ArrayList<>());
+//	}
+//} else {
+//	String errorMessage = messageSource.getMessage("error.param_required.message", new Object[] {},
+//			LocaleContextHolder.getLocale());
+//	String errorDescription = messageSource.getMessage("error.param_required.description", new Object[] {},
+//			LocaleContextHolder.getLocale());
+//	throw new NotFoundRestException(errorMessage, errorDescription, new ArrayList<>());
+//}
+//}

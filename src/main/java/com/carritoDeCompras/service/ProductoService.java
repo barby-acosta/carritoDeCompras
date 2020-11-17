@@ -40,7 +40,6 @@ public class ProductoService {
 		if (dni != null) {
 			List<Producto> result = productoRepository.getReporte(dni);
 			return result;
-//			return null;
 		} else {
 			String errorMessage = messageSource.getMessage("error.param_required.message", new Object[] {},
 					LocaleContextHolder.getLocale());
