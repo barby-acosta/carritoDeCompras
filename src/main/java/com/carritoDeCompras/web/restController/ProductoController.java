@@ -1,53 +1,50 @@
 package com.carritoDeCompras.web.restController;
 
+
+import java.net.URISyntaxException;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.carritoDeCompras.domain.Producto;
+import com.carritoDeCompras.dto.ProductoDTO;
+import com.carritoDeCompras.service.ProductoService;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/producto")
 public class ProductoController {
 
-//	private final Logger log = LoggerFactory.getLogger(ProductoController.class);
-//
-//	@Inject
-//	private ProductoService productoService;
-//
-//	@GetMapping("/productos")
-//	public ResponseEntity<List<ProductoDTO>> getAll(@PageableDefault(size = 2000) Pageable pageable)
-//			throws URISyntaxException {
-//		log.debug("REST request to get a page of Turnos");
-//		Page<ProductoDTO> page = productoService.findAll(pageable);
-//		return new ResponseEntity<>(page.getContent(), HttpStatus.OK);
-//	}
-//
-//	@GetMapping("/productos/{id}")
-//	public ResponseEntity<ProductoDTO> getOne(@PathVariable Long id) {
-//		log.debug("REST request to get Producto : {}", id);
-//		ProductoDTO result = productoService.findOne(id);
-//		return new ResponseEntity<>(result, HttpStatus.OK);
-//	}
-//
-//	@PostMapping("/productos")
-//	public ResponseEntity<ProductoDTO> create(@Valid @RequestBody ProductoDTO productoDTO) throws URISyntaxException {
-//		log.debug("REST request to save Producto : {}", productoDTO);
-//		ProductoDTO result = productoService.save(productoDTO);
-//		return new ResponseEntity<>(result, HttpStatus.OK);
-//	}
-//
-//	@PutMapping("/productos/{id}")
-//	public ResponseEntity<ProductoDTO> update(@PathVariable Long id, @Valid @RequestBody ProductoDTO productoDTO)
-//			throws URISyntaxException {
-//		log.debug("REST request to update Producto : {}", productoDTO);
-//		ProductoDTO result = productoService.update(id, productoDTO);
-//		return new ResponseEntity<>(result, HttpStatus.OK);
-//	}
-//
-//	public ResponseEntity<Void> delete(@PathVariable Long id) {
-//		log.debug("REST request to delete Producto : {}", id);
-//		productoService.delete(id);
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
+	private final Logger log = LoggerFactory.getLogger(ProductoController.class);
 
+	@Autowired
+	private ProductoService productoService;
+
+	@GetMapping("/reporte/{dni}")
+	public ResponseEntity<List<Producto>> getReporte(@PathVariable String dni)
+			throws URISyntaxException {
+		log.debug("REST reporte");
+		List<Producto> prod = productoService.getReporte(dni);
+		return new ResponseEntity<>(prod, HttpStatus.OK);
+	}
+	
+	@GetMapping("/productos")
+    public ResponseEntity<List<ProductoDTO>> getAll(@PageableDefault(size =2000) Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST listado de productos");
+        Page<ProductoDTO> page = productoService.findAll(pageable);
+        return new ResponseEntity<>(page.getContent(), HttpStatus.OK);
+    }  
 }

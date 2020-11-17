@@ -1,6 +1,7 @@
 package com.carritoDeCompras.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class ProductoService {
 
 	@Autowired
 	private ProductoRepository productoRepository;
-
+	
 	@Autowired
 	private ProductoMapper productoMapper;
 
@@ -34,91 +35,25 @@ public class ProductoService {
 	private MessageSource messageSource;
 
 	@Transactional(readOnly = true)
-	public Page<ProductoDTO> findAll(Pageable pageable) {
-		log.debug("Request to get all Productos");
-		Page<Producto> result = productoRepository.findAll(pageable);
-		return result.map(producto -> productoMapper.productoToProductoDTO(producto));
+	public List<Producto> getReporte(String dni) {
+		log.debug("Request Reporte");
+		if (dni != null) {
+			List<Producto> result = productoRepository.getReporte(dni);
+			return result;
+//			return null;
+		} else {
+			String errorMessage = messageSource.getMessage("error.param_required.message", new Object[] {},
+					LocaleContextHolder.getLocale());
+			String errorDescription = messageSource.getMessage("error.param_required.description", new Object[] {},
+					LocaleContextHolder.getLocale());
+			throw new NotFoundRestException(errorMessage, errorDescription, new ArrayList<>());
+		}
 	}
 
 	@Transactional(readOnly = true)
-	public ProductoDTO findOne(Long id) {
-		log.debug("Request to get Producto : {}", id);
-		if (id != null) {
-			Producto producto = productoRepository.findProductoById(id);
-			if (producto != null) {
-				ProductoDTO result = productoMapper.productoToProductoDTO(producto);
-				return result;
-			} else {
-				String errorMessage = messageSource.getMessage("error.get.not_found.message", new Object[] {},
-						LocaleContextHolder.getLocale());
-				String errorDescription = messageSource.getMessage("error.get.not_found.description", new Object[] {},
-						LocaleContextHolder.getLocale());
-				throw new NotFoundRestException(errorMessage, errorDescription, new ArrayList<>());
-			}
-		} else {
-			String errorMessage = messageSource.getMessage("error.param_required.message", new Object[] {},
-					LocaleContextHolder.getLocale());
-			String errorDescription = messageSource.getMessage("error.param_required.description", new Object[] {},
-					LocaleContextHolder.getLocale());
-			throw new NotFoundRestException(errorMessage, errorDescription, new ArrayList<>());
-		}
+	public Page<ProductoDTO> findAll(Pageable pageable) {
+		log.debug("Request findAll productos");
+		Page<Producto> result = productoRepository.findAll(pageable);
+		return result.map(producto -> productoMapper.productoToProductoDTO(producto));
 	}
-
-	public ProductoDTO save(ProductoDTO productoDTO) {
-		log.debug("Request to save Producto cambio : {}", productoDTO);
-		Producto producto = productoMapper.productoDTOToProducto(productoDTO);
-		producto = productoRepository.save(producto);
-		ProductoDTO result = productoMapper.productoToProductoDTO(producto);
-		return result;
-	}
-
-	public ProductoDTO update(Long id, ProductoDTO productoDTO) {
-		log.debug("Request to update Producto cambio : {}", productoDTO);
-		if (id != null) {
-			Producto productoBd = productoRepository.findProductoById(id);
-			if (productoBd != null) {
-				Producto producto = productoMapper.productoDTOToProducto(productoDTO);
-				producto.setId(id);
-				producto = productoRepository.save(producto);
-				ProductoDTO result = productoMapper.productoToProductoDTO(producto);
-				return result;
-			} else {
-				String errorMessage = messageSource.getMessage("error.update.not_found.message", new Object[] {},
-						LocaleContextHolder.getLocale());
-				String errorDescription = messageSource.getMessage("error.update.not_found.description",
-						new Object[] {}, LocaleContextHolder.getLocale());
-				throw new NotFoundRestException(errorMessage, errorDescription, new ArrayList<>());
-			}
-		} else {
-			String errorMessage = messageSource.getMessage("error.param_required.message", new Object[] {},
-					LocaleContextHolder.getLocale());
-			String errorDescription = messageSource.getMessage("error.param_required.description", new Object[] {},
-					LocaleContextHolder.getLocale());
-			throw new NotFoundRestException(errorMessage, errorDescription, new ArrayList<>());
-		}
-	}
-
-	public void delete(Long id) {
-		log.debug("Request to delete Producto : {}", id);
-		if (id != null) {
-			Producto producto = productoRepository.findProductoById(id);
-			if (producto != null) {
-				productoRepository.delete(producto);
-			} else {
-				String errorMessage = messageSource.getMessage("error.delete.not_found.message", new Object[] {},
-						LocaleContextHolder.getLocale());
-				String errorDescription = messageSource.getMessage("error.delete.not_found.description",
-						new Object[] {}, LocaleContextHolder.getLocale());
-				throw new NotFoundRestException(errorMessage, errorDescription, new ArrayList<>());
-			}
-		} else {
-			String errorMessage = messageSource.getMessage("error.param_required.message", new Object[] {},
-					LocaleContextHolder.getLocale());
-			String errorDescription = messageSource.getMessage("error.param_required.description", new Object[] {},
-					LocaleContextHolder.getLocale());
-			throw new NotFoundRestException(errorMessage, errorDescription, new ArrayList<>());
-		}
-
-	}
-
 }

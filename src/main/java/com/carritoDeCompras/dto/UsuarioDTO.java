@@ -51,9 +51,4 @@ public class UsuarioDTO {
 		this.carritos = carritos;
 	}
 
-	@Override
-	public String toString() {
-		return "UsuarioDTO [id=" + id + ", dni=" + dni + ", vip=" + vip + ", carritos=" + carritos + "]";
-	}
-
 }

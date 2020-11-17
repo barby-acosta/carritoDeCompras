@@ -1,6 +1,6 @@
 package com.carritoDeCompras.dto;
 
-import java.util.Set;
+import java.util.List;
 
 import com.carritoDeCompras.domain.Producto;
 
@@ -20,12 +20,12 @@ public class CarritoDTO {
 //	private Integer descuento;
 	// descuento otorgado
 
-//	private Float totalsindescuento;
+	private Float totalsindescuento;
 	// total de la compra
 
 //	private Usuario usuario;
 
-	private Set<Producto> productos;
+	private List<Producto> productos;
 
 	public CarritoDTO() {
 		super();
@@ -56,18 +56,20 @@ public class CarritoDTO {
 		this.totalcondescuento = totalcondescuento;
 	}
 
-	public Set<Producto> getProductos() {
+	public List<Producto> getProductos() {
 		return productos;
 	}
 
-	public void setProductos(Set<Producto> productos) {
+	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
 
-	@Override
-	public String toString() {
-		return "CarritoDTO [id=" + id + ", estado=" + estado + ", totalcondescuento=" + totalcondescuento
-				+ ", productos=" + productos + "]";
+	public Float getTotalsindescuento() {
+		return totalsindescuento;
 	}
 
+	public void setTotalsindescuento(Float totalsindescuento) {
+		this.totalsindescuento = totalsindescuento;
+	}
+	
 }

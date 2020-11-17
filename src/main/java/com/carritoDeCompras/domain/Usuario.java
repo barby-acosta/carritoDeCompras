@@ -2,7 +2,6 @@ package com.carritoDeCompras.domain;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +29,7 @@ public class Usuario {
 	private Boolean vip;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
 	private Set<Carrito> carritos;
 
 	public Usuario() {

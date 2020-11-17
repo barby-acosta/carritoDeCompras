@@ -1,8 +1,8 @@
 package com.carritoDeCompras.domain;
 
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,13 +44,13 @@ public class Carrito {
 	private Float totalsindescuento;
 	// total de la compra
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.MERGE)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 
 	@ManyToMany
 	@JoinTable(name = "carritoproducto", joinColumns = @JoinColumn(name = "carrito_id"), inverseJoinColumns = @JoinColumn(name = "producto_id"))
-	private Set<Producto> productos;
+	private List<Producto> productos;
 
 	public Carrito() {
 		super();
@@ -58,7 +58,7 @@ public class Carrito {
 	}
 
 	public Carrito(Long id, String tipo, String estado, Float totalcondescuento, Integer descuento, Float totalsindescuento,
-			Usuario usuario, Set<Producto> productos) {
+			Usuario usuario, List<Producto> productos) {
 		super();
 		this.id = id;
 		this.tipo = tipo;
@@ -126,11 +126,11 @@ public class Carrito {
 		this.usuario = usuario;
 	}
 
-	public Set<Producto> getProductos() {
+	public List<Producto> getProductos() {
 		return productos;
 	}
 
-	public void setProductos(Set<Producto> productos) {
+	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
 
